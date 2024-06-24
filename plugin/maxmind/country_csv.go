@@ -94,7 +94,7 @@ func (g *geoLite2CountryCSV) GetDescription() string {
 }
 
 func (g *geoLite2CountryCSV) Input(container lib.Container) (lib.Container, error) {
-	ccMap, err := g.getCountryCode()
+	ccMap, err := g.getContinentCode()
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,7 @@ func (g *geoLite2CountryCSV) Input(container lib.Container) (lib.Container, erro
 	return container, nil
 }
 
-func (g *geoLite2CountryCSV) getCountryCode() (map[string]string, error) {
+func (g *geoLite2CountryCSV) getContinentCode() (map[string]string, error) {
 	ccReader, err := os.Open(g.CountryCodeFile)
 	if err != nil {
 		return nil, err
@@ -154,10 +154,15 @@ func (g *geoLite2CountryCSV) getCountryCode() (map[string]string, error) {
 	for _, line := range lines[1:] {
 		id := strings.TrimSpace(line[0])
 		countryCode := strings.TrimSpace(line[4])
-		if id == "" || countryCode == "" {
+		continentCode := strings.TrimSpace(line[2])
+		if id == "" || continentCode == "" {
 			continue
 		}
-		ccMap[id] = strings.ToUpper(countryCode)
+		if countryCode == "CN" {
+			ccMap[id] = strings.ToUpper(countryCode)
+		} else {
+			ccMap[id] = strings.ToUpper(continentCode)
+		}
 	}
 	return ccMap, nil
 }

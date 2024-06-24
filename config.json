@@ -6,7 +6,8 @@
       "args": {
         "country": "./geolite2/GeoLite2-Country-Locations-en.csv",
         "ipv4": "./geolite2/GeoLite2-Country-Blocks-IPv4.csv",
-        "ipv6": "./geolite2/GeoLite2-Country-Blocks-IPv6.csv"
+        "ipv6": "./geolite2/GeoLite2-Country-Blocks-IPv6.csv",
+        "onlyIPType": "ipv4"
       }
     },
     {
@@ -39,40 +40,8 @@
       "type": "text",
       "action": "add",
       "args": {
-        "name": "cn",
-        "uri": "https://raw.githubusercontent.com/gaoyifan/china-operator-ip/ip-lists/china6.txt",
-        "onlyIPType": "ipv6"
-      }
-    },
-    {
-      "type": "text",
-      "action": "add",
-      "args": {
-        "name": "cloudflare",
-        "uri": "https://www.cloudflare.com/ips-v4"
-      }
-    },
-    {
-      "type": "text",
-      "action": "add",
-      "args": {
-        "name": "cloudflare",
-        "uri": "https://www.cloudflare.com/ips-v6"
-      }
-    },
-    {
-      "type": "text",
-      "action": "add",
-      "args": {
-        "name": "telegram",
-        "uri": "https://core.telegram.org/resources/cidr.txt"
-      }
-    },
-    {
-      "type": "text",
-      "action": "add",
-      "args": {
-        "inputDir": "./data"
+        "name": "anycast",
+        "uri": "https://raw.githubusercontent.com/bgptools/anycast-prefixes/master/anycatch-v4-prefixes.txt"
       }
     },
     {
@@ -100,23 +69,6 @@
       "type": "v2rayGeoIPDat",
       "action": "output",
       "args": {
-        "outputName": "geoip-asn.dat",
-        "wantedList": [
-          "cloudflare",
-          "cloudfront",
-          "facebook",
-          "fastly",
-          "google",
-          "netflix",
-          "telegram",
-          "twitter"
-        ]
-      }
-    },
-    {
-      "type": "v2rayGeoIPDat",
-      "action": "output",
-      "args": {
         "oneFilePerList": true,
         "wantedList": ["cn", "private"]
       }
@@ -127,16 +79,9 @@
       "args": {
         "outputName": "Country.mmdb",
         "overwriteList": [
+          "anycast",
           "cn",
-          "private",
-          "cloudflare",
-          "cloudfront",
-          "facebook",
-          "fastly",
-          "google",
-          "netflix",
-          "telegram",
-          "twitter"
+          "private"
         ]
       }
     },
@@ -146,23 +91,6 @@
       "args": {
         "outputName": "Country-only-cn-private.mmdb",
         "wantedList": ["cn", "private"]
-      }
-    },
-    {
-      "type": "maxmindMMDB",
-      "action": "output",
-      "args": {
-        "outputName": "Country-asn.mmdb",
-        "wantedList": [
-          "cloudflare",
-          "cloudfront",
-          "facebook",
-          "fastly",
-          "google",
-          "netflix",
-          "telegram",
-          "twitter"
-        ]
       }
     },
     {
