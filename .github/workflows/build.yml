@@ -54,6 +54,15 @@ jobs:
           rm -f GeoLite2-Country-CSV.zip
           mv GeoLite2* geolite2
 
+      - name: Get IPInfo
+        env:
+          IPINFO_LICENSE_KEY: ${{ secrets.IPINFO_LICENSE }}
+        run: |
+          mkdir ipinfo
+          curl -L "https://ipinfo.io/data/free/country.csv.gz?token=${IPINFO_LICENSE_KEY}" -o country.csv.gz
+          gzip -d country.csv.gz
+          mv country.csv ipinfo/
+
       - name: Build geoip files
         run: |
           go run ./

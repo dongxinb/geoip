@@ -273,6 +273,24 @@ func (e *Entry) AddPrefix(cidr any) error {
 	return nil
 }
 
+func (e *Entry) AddRange(from string, to string) error {
+	fromAddr, err := netip.ParseAddr(from)
+	if err != nil {
+		return err
+	}
+	toAddr, err := netip.ParseAddr(to)
+	if err != nil {
+		return err
+	}
+	ipRange := netipx.IPRangeFrom(fromAddr, toAddr)
+	if fromAddr.Is4() {
+		e.ipv4Builder.AddRange(ipRange)
+	} else {
+		e.ipv6Builder.AddRange(ipRange)
+	}
+	return nil
+}
+
 func (e *Entry) RemovePrefix(cidr string) error {
 	prefix, ipType, err := e.processPrefix(cidr)
 	if err != nil && err != ErrCommentLine {
