@@ -43,6 +43,14 @@
       }
     },
     {
+      "type": "text",
+      "action": "add",
+      "args": {
+        "name": "anycast",
+        "uri": "./anycast_ip_list.txt"
+      }
+    },
+    {
       "type": "private",
       "action": "add"
     }
