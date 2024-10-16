@@ -145,6 +145,9 @@ func (g *ipinfo2CountryCSV) process(file string, entries map[string]*lib.Entry) 
 		if country == "CN" {
 			continent = country
 		}
+		if country == "SG" || country == "MY" || country == "ID" || country == "TH" {
+			continent = "SG"
+		}
 		if len(wantList) > 0 {
 			if _, found := wantList[continent]; !found {
 				continue
